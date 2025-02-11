@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.scss" />
+    <title></title>
+  </head>
+  <body>
+    <form class="ui-form">
+      <input class="ui-input" type="email" placeholder="your@email.com" />
+      <!-- You can't have 2 simultaneous animations that change same css-props (transform in our case),
+      the solution would be to add a wrapper and animate the wrapper -->
+      <div class="ui-button-wrapper">
+        <button class="ui-button" type="button">
+          <span>Subscribe</span>
+        </button>
+      </div>
+    </form>
+  </body>
+</html>
