@@ -37,7 +37,7 @@ body {
   outline: none;
   transition: inherit;
 
-  &-invalid {
+  &:invalid:not(:focus) {
     animation: shake 0.3s;
   }
 }
