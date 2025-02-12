@@ -1,0 +1,41 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+}
+
+.grid {
+  --duration-animation: 0.4s;
+  --duration-pattern: 3s;
+  --stagger: 0.1s;
+  --interval: calc(var(--duration-animation) - var(--stagger));
+
+  display: grid;
+  grid-template-columns: repeat(var(--gridsize), 1fr);
+  grid-template-rows: repeat(var(--gridsize), 1fr);
+
+  gap: 0.5rem;
+}
+
+.ball {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--color);
+  animation: pulse var(--duration-animation)
+    calc(var(--interval) * var(--i) * var(--delay)) infinite;
+  animation-timing-function: ease-out;
+
+  transition: background-color var(--duration-pattern);
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.3);
+  }
+}
