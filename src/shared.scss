@@ -22,6 +22,7 @@ body {
   grid-template-areas: "input button";
 
   --color: lightgrey;
+  --borderWidth: 2px;
 
   &:focus-within {
     --color: rgb(17, 148, 255);
@@ -32,25 +33,23 @@ body {
   grid-area: input;
   padding: 0 1rem;
   height: 2.5rem;
-  border: 2px solid var(--color);
+  border: var(--borderWidth) solid var(--color);
   border-radius: 0.25rem;
   outline: none;
   transition: inherit;
-
-  &:invalid:not(:focus) {
-    animation: shake 0.3s;
-  }
 }
 
 .ui-button {
   grid-area: button;
-  border: none;
   padding: 0 1rem;
+  height: calc(2.5rem + 2 * var(--borderWidth));
   color: white;
   font-weight: bold;
+
+  border: none;
   border-radius: 0.25rem;
-  height: 2.5rem;
   background-color: var(--color);
+
   transition: inherit;
   cursor: pointer;
 }

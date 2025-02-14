@@ -1,0 +1,46 @@
+.ui-form {
+  --duration: 0.3s;
+  --delay: var(--duration);
+  --delay-button: calc(var(--delay) * 2);
+
+  animation-duration: var(--duration);
+  animation-timing-function: ease-in;
+
+  &[data-state="subscribe"] {
+    animation-name: slide-up;
+  }
+
+  &[data-state="subscribing"] {
+    --color: rebeccapurple;
+  }
+
+  &[data-state="fail"] {
+    --color: orangered;
+    animation-name: shake;
+  }
+
+  &[data-state="success"] {
+    --color: green;
+  }
+
+  .ui-input,
+  .ui-button {
+    animation-name: slide-up;
+    animation-duration: var(--duration);
+    animation-timing-function: inherit;
+    animation-delay: var(--delay);
+    animation-fill-mode: both;
+  }
+
+  .ui-button {
+    animation-delay: var(--delay-button);
+
+    span {
+      display: none;
+
+      &[data-active="true"] {
+        display: block;
+      }
+    }
+  }
+}
