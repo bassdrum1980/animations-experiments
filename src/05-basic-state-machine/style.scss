@@ -1,0 +1,52 @@
+#app {
+  --opacity: 1;
+  --bgc: rebeccapurple;
+
+  &[data-state="loading"] {
+    --opacity: 0.7;
+    --bgc: lightgray;
+    --content: "loading...";
+  }
+}
+
+button {
+  appearance: none;
+  position: relative;
+  padding: 2rem 3.5rem;
+
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+
+  background-color: var(--bgc);
+  border-radius: 0.25rem;
+  border: none;
+
+  transition: all 0.3s;
+
+  opacity: var(--opacity, 1);
+
+  // &:hover {
+  //   opacity: 0.9;
+  // }
+
+  &:active {
+    transition-duration: 0.1s;
+    transform: translateY(20%);
+    // opacity: 1;
+  }
+
+  &::after {
+    position: absolute;
+    left: 50%;
+    top: 125%;
+    transform: translateX(-50%);
+
+    color: #999;
+    font-size: 1rem;
+
+    content: var(--content);
+
+    animation: blink 1s infinite;
+  }
+}
