@@ -1,11 +1,3 @@
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: rgb(245, 245, 245);
-}
-
 .container {
   --duration: 1s;
   --stagger: 0.5s;
@@ -21,17 +13,4 @@ body {
   animation: moveLeftRight var(--duration) calc(var(--interval) * var(--i))
     infinite;
   animation-timing-function: ease-out;
-}
-
-@keyframes moveLeftRight {
-  from,
-  to {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(50%);
-  }
-  75% {
-    transform: translateX(-50%);
-  }
 }

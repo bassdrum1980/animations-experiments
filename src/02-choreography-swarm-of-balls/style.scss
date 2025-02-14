@@ -1,8 +1,4 @@
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+:root {
   background-color: black;
 }
 
@@ -29,13 +25,4 @@ body {
   animation-timing-function: ease-out;
 
   transition: background-color var(--duration-pattern);
-}
-
-@keyframes pulse {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.3);
-  }
 }
