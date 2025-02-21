@@ -1,0 +1,14 @@
+#ball {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 10rem;
+  height: 10rem;
+
+  border-radius: 50%;
+  background: olivedrab;
+
+  transform: translate(calc(var(--x) * 1px), calc(var(--y) * 1px));
+  // transition: transform 0.1s;
+}
