@@ -9,7 +9,7 @@ const machine = {
     },
     pulse: {
       on: {
-        CLICK: "pulse",
+        CLICK: "still",
         DONE: "still",
       },
     },
@@ -19,7 +19,7 @@ const machine = {
 // Lerp Technique
 // https://rachsmith.com/lerp/
 window.addEventListener("DOMContentLoaded", () => {
-  const ball = document.getElementById("ball");
+  const ball = document.querySelector(".ball-wrapper");
   const ballRect = ball.getBoundingClientRect();
   const dx = ballRect.width / 2;
   const dy = ballRect.height / 2;
@@ -60,4 +60,21 @@ window.addEventListener("DOMContentLoaded", () => {
   function lerp(start, end) {
     return start + (end - start) * lerpT;
   }
+});
+
+// Pulse animation just for the fun of it
+window.addEventListener("DOMContentLoaded", () => {
+  const ball = document.querySelector(".ball");
+
+  ball.onclick = () => {
+    const currentState = ball.dataset.state ?? machine.initial;
+    const nextState = machine.state[currentState].on["CLICK"] ?? currentState;
+    ball.dataset.state = nextState;
+  };
+
+  ball.children[ball.children.length - 1].onanimationend = () => {
+    const currentState = ball.dataset.state ?? machine.initial;
+    const nextState = machine.state[currentState].on["DONE"] ?? currentState;
+    ball.dataset.state = nextState;
+  };
 });

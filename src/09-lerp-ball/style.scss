@@ -1,14 +1,50 @@
-#ball {
+.ball-wrapper {
   position: absolute;
   left: 0;
   top: 0;
+  transform: translate(calc(var(--x) * 1px), calc(var(--y) * 1px));
+}
 
-  width: 10rem;
-  height: 10rem;
+.ball {
+  --duration: 0.3s;
+  --stagger: 0.15s;
+  --interval: calc(var(--duration) - var(--stagger));
+  --width: 10rem;
+  --height: 10rem;
+
+  position: relative;
+
+  width: var(--width);
+  height: var(--height);
 
   border-radius: 50%;
   background: olivedrab;
 
-  transform: translate(calc(var(--x) * 1px), calc(var(--y) * 1px));
-  // transition: transform 0.1s;
+  &:hover {
+    cursor: pointer;
+  }
+
+  &[data-state="pulse"],
+  &[data-state="restart"] {
+    .ball-inner {
+      animation: pulse-xl var(--duration) calc(var(--interval) * var(--i));
+    }
+  }
+}
+
+.ball-inner {
+  --sizeMultiplier: 5;
+  --ds: calc(var(--i) * var(--sizeMultiplier) * 1px);
+
+  position: absolute;
+  left: calc(var(--ds) / 2);
+  top: calc(var(--ds) / 2);
+  z-index: -1;
+
+  width: calc(var(--width) - var(--ds));
+  height: calc(var(--height) - var(--ds));
+
+  border-radius: 50%;
+  border: 1px solid rgb(183, 221, 108);
+  box-sizing: border-box;
 }
