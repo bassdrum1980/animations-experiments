@@ -1,0 +1,65 @@
+body {
+  background: #0a4b47;
+}
+
+.container {
+  --duration: 4s;
+
+  animation: container var(--duration);
+  animation-fill-mode: forwards;
+  h1,
+  h2 {
+    margin: 0;
+    font-size: 5vw;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    text-align: center;
+  }
+
+  h1 {
+    color: #feffff;
+    animation: h1 var(--duration);
+  }
+
+  h2 {
+    color: #eefcad;
+    animation: h2 var(--duration);
+  }
+}
+
+@keyframes container {
+  from,
+  50% {
+    transform: translateY(-7.5%) scale(1.5);
+  }
+
+  to {
+    transform: translateY(-22.5%) scale(1);
+  }
+}
+
+@keyframes h1 {
+  from {
+    // https://bennettfeely.com/clippy/
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  }
+  50%,
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes h2 {
+  from,
+  50% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0 !important;
+  }
+}
