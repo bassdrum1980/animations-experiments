@@ -6,4 +6,10 @@ canvas.width = 660;
 canvas.height = 690;
 
 const effect = new Effect(canvas);
-effect.render(ctx);
+
+function animate() {
+  effect.render(ctx);
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);

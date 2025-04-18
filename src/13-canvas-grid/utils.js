@@ -6,13 +6,17 @@ export class Cell {
     this.width = this.effect.cellWidth;
     this.height = this.effect.cellHeight;
     this.image = document.getElementById("image");
+    this.slideX = null;
+    this.slideY = null;
+    this.vx = 0;
+    this.vy = 0;
   }
   draw(context) {
-    context.strokeRect(this.x, this.y, this.width, this.height);
+    //context.strokeRect(this.x, this.y, this.width, this.height);
     context.drawImage(
       this.image,
-      this.x,
-      this.y,
+      this.x + this.slideX,
+      this.y + this.slideY,
       this.width,
       this.height,
       this.x,
@@ -21,6 +25,22 @@ export class Cell {
       this.height
     );
   }
+  update() {
+    const dx = this.effect.mouse.x - this.x;
+    const dy = this.effect.mouse.y - this.y;
+    const distance = Math.hypot(dx, dy);
+    if (distance < this.effect.mouse.radius) {
+      const force = distance / this.effect.mouse.radius;
+      this.vx = force;
+      this.vy = force;
+    } else {
+      this.vx = 0;
+      this.vy = 0;
+    }
+
+    this.slideX += this.vx;
+    this.slideY += this.vy;
+  }
 }
 
 export class Effect {
@@ -28,10 +48,23 @@ export class Effect {
     this.canvas = canvas;
     this.width = canvas.width;
     this.height = canvas.height;
-    this.cellWidth = this.width / 44;
-    this.cellHeight = this.height / 46;
+    this.cellWidth = this.width / 66;
+    this.cellHeight = this.height / 69;
     this.imageGrid = [];
     this.createGrid();
+    this.mouse = {
+      x: undefined,
+      y: undefined,
+      radius: 100,
+    };
+    this.canvas.addEventListener("mousemove", (e) => {
+      this.mouse.x = e.offsetX;
+      this.mouse.y = e.offsetY;
+    });
+    this.canvas.addEventListener("mouseleave", (e) => {
+      this.mouse.x = undefined;
+      this.mouse.y = undefined;
+    });
   }
   createGrid() {
     for (let y = 0; y < this.height; y += this.cellHeight) {
@@ -43,6 +76,7 @@ export class Effect {
   }
   render(context) {
     this.imageGrid.forEach((cell) => {
+      cell.update();
       cell.draw(context);
     });
   }
