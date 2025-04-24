@@ -10,9 +10,11 @@ export class Cell {
     this.slideY = null;
     this.vx = 0;
     this.vy = 0;
+    this.ease = 0.01;
+    this.friction = 0.8;
   }
   draw(context) {
-    //context.strokeRect(this.x, this.y, this.width, this.height);
+    // context.strokeRect(this.x, this.y, this.width, this.height);
     context.drawImage(
       this.image,
       this.x + this.slideX,
@@ -31,15 +33,13 @@ export class Cell {
     const distance = Math.hypot(dx, dy);
     if (distance < this.effect.mouse.radius) {
       const force = distance / this.effect.mouse.radius;
-      this.vx = force;
-      this.vy = force;
-    } else {
-      this.vx = 0;
-      this.vy = 0;
+      const angle = Math.atan2(dy, dx);
+      this.vx = force * Math.cos(angle);
+      this.vy = force * Math.sin(angle);
     }
 
-    this.slideX += this.vx;
-    this.slideY += this.vy;
+    this.slideX += (this.vx *= this.friction) - this.slideX * this.ease;
+    this.slideY += (this.vy *= this.friction) - this.slideY * this.ease;
   }
 }
 
