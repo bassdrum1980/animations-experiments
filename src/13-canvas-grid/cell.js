@@ -38,46 +38,13 @@ export class Cell {
       this.vy = force * Math.sin(angle);
     }
 
+    // this.vx *= this.friction - a force that pushes cells away from the mouse
+    // friction is a coefficient that slows down the force
+    //
+    // this.slideX * this.ease - a force that pulls cells back to their original position
+    // when cell aren't in the mouse's active area
+    // this.ease is a coefficient that slows down the pull back
     this.slideX += (this.vx *= this.friction) - this.slideX * this.ease;
     this.slideY += (this.vy *= this.friction) - this.slideY * this.ease;
-  }
-}
-
-export class Effect {
-  constructor(canvas) {
-    this.canvas = canvas;
-    this.width = canvas.width;
-    this.height = canvas.height;
-    this.cellWidth = this.width / 66;
-    this.cellHeight = this.height / 69;
-    this.imageGrid = [];
-    this.createGrid();
-    this.mouse = {
-      x: undefined,
-      y: undefined,
-      radius: 100,
-    };
-    this.canvas.addEventListener("mousemove", (e) => {
-      this.mouse.x = e.offsetX;
-      this.mouse.y = e.offsetY;
-    });
-    this.canvas.addEventListener("mouseleave", (e) => {
-      this.mouse.x = undefined;
-      this.mouse.y = undefined;
-    });
-  }
-  createGrid() {
-    for (let y = 0; y < this.height; y += this.cellHeight) {
-      for (let x = 0; x < this.width; x += this.cellWidth) {
-        const cell = new Cell(this, x, y);
-        this.imageGrid.push(cell);
-      }
-    }
-  }
-  render(context) {
-    this.imageGrid.forEach((cell) => {
-      cell.update();
-      cell.draw(context);
-    });
   }
 }
