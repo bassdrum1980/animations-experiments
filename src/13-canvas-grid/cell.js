@@ -15,6 +15,16 @@ export class Cell {
     this.vx = 0;
     this.vy = 0;
 
+    // -- Moving cells --
+    // these two define cell position
+    this.positionX = this.effect.width / 2;
+    this.positionY = this.effect.height / 2;
+
+    // these two define cell horizontal and vertical speed
+    this.speedX;
+    this.speedY;
+
+    this.randomize = Math.random() * 20 + 2;
     this.ease = 0.01;
     this.friction = 0.8;
   }
@@ -30,13 +40,20 @@ export class Cell {
       this.height,
 
       // cell position (in canvas context)
-      this.x,
-      this.y,
+      this.positionX,
+      this.positionY,
       this.width,
       this.height
     );
   }
   update() {
+    // cell position
+    this.speedX = (this.x - this.positionX) / this.randomize;
+    this.speedY = (this.y - this.positionY) / this.randomize;
+    this.positionX += this.speedX;
+    this.positionY += this.speedY;
+
+    // crop
     const dx = this.effect.mouse.x - this.x;
     const dy = this.effect.mouse.y - this.y;
     const distance = Math.hypot(dx, dy);
