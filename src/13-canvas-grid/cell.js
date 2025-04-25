@@ -1,15 +1,20 @@
 export class Cell {
   constructor(effect, x, y) {
     this.effect = effect;
+    this.image = document.getElementById("image");
+
+    // these four define cell position
     this.x = x;
     this.y = y;
     this.width = this.effect.cellWidth;
     this.height = this.effect.cellHeight;
-    this.image = document.getElementById("image");
+
+    // these four define image cropping area
     this.slideX = null;
     this.slideY = null;
     this.vx = 0;
     this.vy = 0;
+
     this.ease = 0.01;
     this.friction = 0.8;
   }
@@ -17,10 +22,14 @@ export class Cell {
     // context.strokeRect(this.x, this.y, this.width, this.height);
     context.drawImage(
       this.image,
+
+      // cropping area (in image context)
       this.x + this.slideX,
       this.y + this.slideY,
       this.width,
       this.height,
+
+      // cell position (in canvas context)
       this.x,
       this.y,
       this.width,
