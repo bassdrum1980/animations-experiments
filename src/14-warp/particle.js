@@ -3,9 +3,9 @@ export class Particle {
     this.effect = effect;
     this.x = Math.random() * this.effect.width;
     this.y = Math.random() * this.effect.height;
-    this.size = 3;
-    this.vx = Math.random() * 10;
-    this.vy = 1;
+    this.size = Math.random() * 3;
+    this.vx = Math.random() * 2 - 1;
+    this.vy = Math.random() * 2 - 1;
   }
 
   draw() {
