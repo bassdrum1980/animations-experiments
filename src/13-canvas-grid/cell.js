@@ -1,7 +1,8 @@
 export class Cell {
-  constructor(effect, x, y) {
+  constructor(effect, x, y, i) {
     this.effect = effect;
     this.image = document.getElementById("image");
+    this.index = i;
 
     // these four define cell position
     this.x = x;
@@ -16,10 +17,10 @@ export class Cell {
     this.vy = 0;
 
     // -- Moving cell --
-    // these two define cell position
+    // these two define cell position while moving
+    // starting position is the center of the canvas
     this.positionX = this.effect.width / 2;
     this.positionY = this.effect.height / 2;
-
     // these two define cell horizontal and vertical speed
     this.speedX;
     this.speedY;
@@ -28,10 +29,13 @@ export class Cell {
     this.ease = 0.01;
     this.friction = 0.8;
 
-    this.start();
+    setTimeout(() => {
+      this.start();
+    }, this.index);
   }
   draw(context) {
-    context.strokeRect(this.positionX, this.positionY, this.width, this.height);
+    //context.strokeRect(this.positionX, this.positionY, this.width, this.height);
+
     context.drawImage(
       this.image,
 
@@ -58,8 +62,6 @@ export class Cell {
     // cell position
     // condition stops movement calculations when the cell is in place
     if (Math.abs(this.speedX) > 0.1 || Math.abs(this.speedY) > 0.1) {
-      // FIXME: the console never stops
-      console.log("speed update");
       this.speedX = (this.x - this.positionX) / this.randomize;
       this.speedY = (this.y - this.positionY) / this.randomize;
       this.positionX += this.speedX;
@@ -70,11 +72,13 @@ export class Cell {
     const dx = this.effect.mouse.x - this.x;
     const dy = this.effect.mouse.y - this.y;
     const distance = Math.hypot(dx, dy);
+
     if (distance < this.effect.mouse.radius) {
       const force = distance / this.effect.mouse.radius;
+      // angle in radians
       const angle = Math.atan2(dy, dx);
-      this.vx = force * Math.cos(angle);
-      this.vy = force * Math.sin(angle);
+      this.vx = force * Math.cos(angle); // cosinus gives us x
+      this.vy = force * Math.sin(angle); // sinus gives us y
     }
 
     // this.vx *= this.friction - a force that pushes cells away from the mouse
