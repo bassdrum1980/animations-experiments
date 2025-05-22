@@ -13,7 +13,7 @@ window.addEventListener("load", () => {
   effect.draw();
 
   function animate() {
-    // context.clearRect(0, 0, canvas.width, canvas.height);
+    context.clearRect(0, 0, canvas.width, canvas.height);
     effect.update();
     effect.draw();
     requestAnimationFrame(animate);

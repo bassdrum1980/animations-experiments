@@ -12,7 +12,7 @@ export class Effect {
     this.centerY = this.height / 2 - this.image.height / 2;
 
     this.particles = [];
-    this.particleCount = 100;
+    this.particleCount = 3000;
   }
 
   init() {

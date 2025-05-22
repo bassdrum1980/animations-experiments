@@ -4,7 +4,7 @@ export class Particle {
     this.x = Math.random() * this.effect.width;
     this.y = Math.random() * this.effect.height;
     this.size = 3;
-    this.vx = 1;
+    this.vx = Math.random() * 10;
     this.vy = 1;
   }
 
