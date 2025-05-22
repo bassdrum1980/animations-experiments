@@ -21,5 +21,5 @@ window.addEventListener("load", () => {
 
   animate();
 
-  console.log(effect);
+  console.log(effect.particles);
 });

@@ -12,12 +12,31 @@ export class Effect {
     this.centerY = this.height / 2 - this.image.height / 2;
 
     this.particles = [];
-    this.particleCount = 3000;
+    this.particleSize = 2;
   }
 
   init() {
-    for (let i = 0; i < this.particleCount; i++) {
-      this.particles.push(new Particle(this));
+    this.context.drawImage(this.image, this.centerX, this.centerY);
+    const pixels = this.context.getImageData(
+      0,
+      0,
+      this.width,
+      this.height
+    ).data;
+
+    for (let y = 0; y < this.height; y += this.particleSize) {
+      for (let x = 0; x < this.width; x += this.particleSize) {
+        const index = (y * this.width + x) * 4;
+        const red = pixels[index];
+        const green = pixels[index + 1];
+        const blue = pixels[index + 2];
+        const alpha = pixels[index + 3];
+        const rgba = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+
+        if (alpha > 0) {
+          this.particles.push(new Particle(this, x, y, rgba));
+        }
+      }
     }
   }
 
@@ -25,7 +44,6 @@ export class Effect {
     this.particles.forEach((particle) => {
       particle.draw();
     });
-    this.context.drawImage(this.image, this.centerX, this.centerY);
   }
 
   update() {
