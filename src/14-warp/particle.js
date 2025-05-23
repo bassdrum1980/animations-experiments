@@ -14,7 +14,7 @@ export class Particle {
 
     this.vx = 0;
     this.vy = 0;
-    this.friction = 0.95;
+    this.friction = 0.8;
     this.ease = Math.random() * 0.05 + 0.03;
     this.dx = 0;
     this.dy = 0;
@@ -32,16 +32,16 @@ export class Particle {
     this.dx = this.effect.mouse.x - this.x;
     this.dy = this.effect.mouse.y - this.y;
     // square root is expensive
-    // instead of square root we use artificially large this.effect.mouse.radius
-    // inside the effect
+    // instead of square root we use larger this.effect.mouse.radius inside the effect
     this.distance = this.dx * this.dx + this.dy * this.dy;
+    // the closer the particle to the mouse, the stronger the force
     // minus - because we want to move the particles away from the mouse
     this.force = -this.effect.mouse.radius / this.distance;
     // Math.random() > 0.7 lets some particles to get inside the mouse radius
-    // making the effect more natural
+    // thus making the effect more natural
     if (this.distance < this.effect.mouse.radius && Math.random() > 0.7) {
       // returns 'theta' angle in radians
-      // ! accepts dy first
+      // accepts 'dy' first
       this.angle = Math.atan2(this.dy, this.dx);
       this.vx += this.force * Math.cos(this.angle);
       this.vy += this.force * Math.sin(this.angle);
