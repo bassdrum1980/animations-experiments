@@ -13,6 +13,17 @@ export class Effect {
 
     this.particles = [];
     this.particleSize = 2;
+
+    this.mouse = {
+      radius: 3000,
+      x: undefined,
+      y: undefined,
+    };
+
+    window.addEventListener("mousemove", (event) => {
+      this.mouse.x = event.x;
+      this.mouse.y = event.y;
+    });
   }
 
   init() {
@@ -49,6 +60,12 @@ export class Effect {
   update() {
     this.particles.forEach((particle) => {
       particle.update();
+    });
+  }
+
+  warp() {
+    this.particles.forEach((particle) => {
+      particle.warp();
     });
   }
 }

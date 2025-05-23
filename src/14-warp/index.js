@@ -5,6 +5,8 @@ const context = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+const button = document.getElementById("warpButton");
+
 window.addEventListener("load", () => {
   const image = document.getElementById("sourceImage");
 
@@ -21,5 +23,7 @@ window.addEventListener("load", () => {
 
   animate();
 
-  console.log(effect.particles);
+  button.addEventListener("click", () => {
+    effect.warp();
+  });
 });

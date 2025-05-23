@@ -9,10 +9,28 @@ canvas {
 
 .controls {
   position: absolute;
-  bottom: 0;
+  bottom: 2rem;
   left: auto;
   right: auto;
   z-index: 1;
+}
+
+button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  font-family: "Bangers", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2rem;
+  background: black;
+  color: white;
+}
+
+button:hover {
+  cursor: pointer;
+  background: white;
+  color: black;
+  transition: all 0.1s ease-in-out;
 }
 
 img {
