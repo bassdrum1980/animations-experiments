@@ -12,7 +12,7 @@ export class Effect {
     this.centerY = this.height / 2 - this.image.height / 2;
 
     this.particles = [];
-    this.particleSize = 6;
+    this.particleSize = 2;
 
     this.mouse = {
       radius: 3000,
@@ -24,6 +24,8 @@ export class Effect {
       this.mouse.x = event.x;
       this.mouse.y = event.y;
     });
+
+    this.counter = 0;
   }
 
   init() {
@@ -51,42 +53,10 @@ export class Effect {
     }
   }
 
-  //   draw() {
-  //     this.particles.forEach((particle) => {
-  //       particle.draw();
-  //     });
-  //   }
-
   draw() {
-    // creates blank pixel buffer for the whole canvas
-    const imageData = this.context.createImageData(this.width, this.height);
-
     this.particles.forEach((particle) => {
-      const x = Math.round(particle.x);
-      const y = Math.round(particle.y);
-
-      // skip particle if out of bounds
-      if (x < 0 || x >= this.width || y < 0 || y >= this.height) return;
-
-      // parse RGBA string back to get numbers TODO: use a better way
-      const match = particle.originRGBA.match(
-        /rgba?\((\d+), (\d+), (\d+), (\d+)\)/
-      );
-      if (!match) return;
-      const r = parseInt(match[1]);
-      const g = parseInt(match[2]);
-      const b = parseInt(match[3]);
-      const a = parseInt(match[4]);
-
-      // get particle index in buffer
-      const idx = (y * this.width + x) * 4;
-      imageData.data[idx] = r;
-      imageData.data[idx + 1] = g;
-      imageData.data[idx + 2] = b;
-      imageData.data[idx + 3] = a;
+      particle.draw();
     });
-
-    this.context.putImageData(imageData, 0, 0);
   }
 
   update() {
@@ -98,6 +68,14 @@ export class Effect {
   warp() {
     this.particles.forEach((particle) => {
       particle.warp();
+    });
+  }
+
+  assemble() {
+    this.counter = 0;
+
+    this.particles.forEach((particle) => {
+      particle.assemble();
     });
   }
 }
