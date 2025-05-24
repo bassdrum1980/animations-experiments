@@ -78,4 +78,12 @@ export class Effect {
       particle.assemble();
     });
   }
+
+  print() {
+    this.counter = 0;
+
+    this.particles.forEach((particle) => {
+      particle.print();
+    });
+  }
 }

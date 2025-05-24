@@ -7,6 +7,7 @@ canvas.height = window.innerHeight;
 
 const warpButton = document.getElementById("warpButton");
 const assembleButton = document.getElementById("assembleButton");
+const printButton = document.getElementById("printButton");
 
 window.addEventListener("load", () => {
   const image = document.getElementById("sourceImage");
@@ -30,5 +31,9 @@ window.addEventListener("load", () => {
 
   assembleButton.addEventListener("click", () => {
     effect.assemble();
+  });
+
+  printButton.addEventListener("click", () => {
+    effect.print();
   });
 });

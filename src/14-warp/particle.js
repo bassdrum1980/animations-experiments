@@ -80,4 +80,19 @@ export class Particle {
       this.active = true;
     }, this.effect.counter / 8);
   }
+
+  print() {
+    clearTimeout(this.timeoutId);
+
+    this.ease = Math.random() * 0.05 + 0.1;
+    this.x = this.effect.width / 2;
+    this.y = this.effect.height / 2;
+    this.active = false;
+
+    this.effect.counter++;
+
+    this.timeoutId = setTimeout(() => {
+      this.active = true;
+    }, this.effect.counter / 8);
+  }
 }
