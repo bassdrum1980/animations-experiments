@@ -12,12 +12,12 @@ export class Effect {
     this.centerY = this.height / 2 - this.image.height / 2;
 
     this.particles = [];
-    this.particleSize = 2;
+    this.particleSize = 4;
 
     this.mouse = {
       radius: 3000,
-      x: undefined,
-      y: undefined,
+      x: null,
+      y: null,
     };
 
     window.addEventListener("mousemove", (event) => {
@@ -47,7 +47,9 @@ export class Effect {
         const rgba = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
 
         if (alpha > 0) {
-          this.particles.push(new Particle(this, x, y, rgba));
+          this.particles.push(
+            new Particle(this, x, y, red, green, blue, alpha)
+          );
         }
       }
     }

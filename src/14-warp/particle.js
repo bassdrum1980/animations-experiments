@@ -1,5 +1,5 @@
 export class Particle {
-  constructor(effect, originX, originY, originRGBA) {
+  constructor(effect, originX, originY, red, green, blue, alpha) {
     this.effect = effect;
 
     this.x =
@@ -10,7 +10,7 @@ export class Particle {
 
     this.originX = Math.floor(originX);
     this.originY = Math.floor(originY);
-    this.originRGBA = originRGBA;
+    //this.originRGBA = originRGBA;
 
     this.vx = 0;
     this.vy = 0;
@@ -24,10 +24,18 @@ export class Particle {
 
     this.active = true;
     this.timeoutId = null;
+
+    this.red = red;
+    this.green = green;
+    this.blue = blue;
+    this.alpha = alpha;
+    this.originAlpha = alpha;
+
+    this.animationType = "warp"; // 'assemble' or 'print'
   }
 
   draw() {
-    this.effect.context.fillStyle = this.originRGBA;
+    this.effect.context.fillStyle = `rgba(${this.red}, ${this.green}, ${this.blue}, ${this.alpha})`;
     this.effect.context.fillRect(this.x, this.y, this.size, this.size);
   }
 
@@ -41,6 +49,7 @@ export class Particle {
       // the closer the particle to the mouse, the stronger the force
       // minus - because we want to move the particles away from the mouse
       this.force = -this.effect.mouse.radius / this.distance;
+
       // Math.random() > 0.7 lets some particles to get inside the mouse radius
       // thus making the effect more natural
       if (this.distance < this.effect.mouse.radius && Math.random() > 0.7) {
@@ -56,9 +65,22 @@ export class Particle {
       this.y +=
         (this.vy *= this.friction) + (this.originY - this.y) * this.ease;
     }
+
+    // alpha channel's dependency on its distance from origin
+    // enabled only for 'warp' animation type
+    if (this.animationType === "warp") {
+      // to work with alpha channel we will
+      // calculate distance between particle and its origin
+      const oDx = this.originX - this.x;
+      const oDy = this.originY - this.y;
+      this.originDistance = oDx * oDx + oDy * oDy;
+      // the farther particle from its origin, the more transparent it is
+      this.alpha = (this.originAlpha / this.originDistance) * 50;
+    }
   }
 
   warp() {
+    this.animationType = "warp";
     this.ease = Math.random() * 0.05 + 0.1;
     this.x =
       Math.random() * this.effect.width * 4 * (Math.random() > 0.5 ? 1 : -1);
@@ -67,6 +89,8 @@ export class Particle {
   }
 
   assemble() {
+    this.animationType = "assemble";
+
     clearTimeout(this.timeoutId);
 
     this.ease = Math.random() * 0.05 + 0.1;
@@ -82,6 +106,8 @@ export class Particle {
   }
 
   print() {
+    this.animationType = "print";
+
     clearTimeout(this.timeoutId);
 
     this.ease = Math.random() * 0.05 + 0.1;
