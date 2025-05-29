@@ -5,9 +5,5 @@ const context = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// Canvas settings
-context.lineWidth = 6;
-context.lineCap = "round";
-
 const fractal = new Fractal(canvas.width, canvas.height);
 fractal.draw(context);
