@@ -18,25 +18,29 @@ export class Fractal {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.size = this.canvasWidth / 12;
-    this.branches = 96;
-    this.maxDepth = 32;
+    this.sides = 13;
+    this.maxDepth = 3;
+    this.scale = 0.6;
+    this.spread = Math.PI / 4;
+    this.branches = 3;
   }
 
   draw(context) {
     context.save();
     context.translate(this.canvasWidth / 2, this.canvasHeight / 2);
+    context.scale(1, 1);
     context.rotate(0);
 
-    for (let i = 0; i < this.branches; i++) {
-      this.#drawLine(context);
-      context.rotate((Math.PI * 2) / this.branches);
+    for (let i = 0; i < this.sides; i++) {
+      this.#drawLine(context, 0);
+      context.rotate((Math.PI * 2) / this.sides);
     }
 
     context.restore();
   }
 
   #drawLine(context, depth = 0) {
-    if (depth >= this.maxDepth) {
+    if (depth > this.maxDepth) {
       return;
     }
 
@@ -45,11 +49,23 @@ export class Fractal {
     context.lineTo(this.size, 0);
     context.stroke();
 
-    context.save();
-    context.translate(this.size, 0);
-    context.rotate(Math.PI / 8);
-    context.scale(0.9, 0.9);
-    this.#drawLine(context, depth + 1);
-    context.restore();
+    for (let i = 0; i < this.branches; i++) {
+      context.save();
+
+      context.translate(this.size - (this.size / this.branches) * i, 0);
+      context.scale(this.scale, this.scale);
+
+      context.save();
+      context.rotate(this.spread);
+      this.#drawLine(context, depth + 1);
+      context.restore();
+
+      context.save();
+      context.rotate(-this.spread);
+      this.#drawLine(context, depth + 1);
+      context.restore();
+
+      context.restore();
+    }
   }
 }
