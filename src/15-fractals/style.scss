@@ -2,3 +2,9 @@
   margin: 0;
   padding: 0;
 }
+
+#canvasRain {
+  position: absolute;
+  left: 0;
+  z-index: 10;
+}
