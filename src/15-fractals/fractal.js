@@ -23,9 +23,11 @@ export class Fractal {
     this.scale = 0.6;
     this.spread = Math.PI / 4;
     this.branches = 3;
+    this.color = "hsl(200, 100%, 50%)";
   }
 
   draw(context) {
+    context.strokeStyle = this.color;
     context.save();
     context.translate(this.canvasWidth / 2, this.canvasHeight / 2);
     context.scale(1, 1);
