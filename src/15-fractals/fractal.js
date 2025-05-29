@@ -17,24 +17,39 @@ export class Fractal {
   constructor(canvasWidth, canvasHeight) {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
-    this.size = this.canvasWidth / 8;
-    this.branches = 32;
+    this.size = this.canvasWidth / 12;
+    this.branches = 96;
+    this.maxDepth = 32;
   }
 
   draw(context) {
+    context.save();
+    context.translate(this.canvasWidth / 2, this.canvasHeight / 2);
+    context.rotate(0);
+
     for (let i = 0; i < this.branches; i++) {
-      context.save();
-      context.translate(this.canvasWidth / 2, this.canvasHeight / 2);
-      context.rotate((i * Math.PI * 2) / this.branches);
       this.#drawLine(context);
-      context.restore();
+      context.rotate((Math.PI * 2) / this.branches);
     }
+
+    context.restore();
   }
 
-  #drawLine(context) {
+  #drawLine(context, depth = 0) {
+    if (depth >= this.maxDepth) {
+      return;
+    }
+
     context.beginPath();
     context.moveTo(0, 0);
     context.lineTo(this.size, 0);
     context.stroke();
+
+    context.save();
+    context.translate(this.size, 0);
+    context.rotate(Math.PI / 8);
+    context.scale(0.9, 0.9);
+    this.#drawLine(context, depth + 1);
+    context.restore();
   }
 }
