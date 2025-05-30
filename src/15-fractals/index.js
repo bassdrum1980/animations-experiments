@@ -17,8 +17,8 @@ document.body.style.backgroundColor = primaryComplimentaryColor;
 /* Setting Fractal canvas */
 const canvasFractal = document.getElementById("canvasFractal");
 const contextFractal = canvasFractal.getContext("2d");
-canvasFractal.width = 300;
-canvasFractal.height = 300;
+canvasFractal.width = 1000;
+canvasFractal.height = 1000;
 
 /* Setting Rain canvas */
 const canvasRain = document.getElementById("canvasRain");
@@ -47,5 +47,5 @@ fractalImage.onload = () => {
     rainEffect.run(contextRain);
     requestAnimationFrame(animate);
   }
-  animate();
+  // animate();
 };

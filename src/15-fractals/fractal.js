@@ -19,11 +19,11 @@ export class Fractal {
     this.canvasHeight = canvasHeight;
     this.color = color || "hsl(0, 0%, 100%)";
     this.size = this.canvasWidth / 4;
-    this.sides = 16;
-    this.maxDepth = 2;
-    this.scale = 0.6;
+    this.sides = 48;
+    this.maxDepth = 3;
+    this.scale = 0.7;
     this.spread = Math.random() * Math.PI * 0.5 + Math.PI * 0.25;
-    this.branches = 3;
+    this.branches = 2;
   }
 
   draw(context) {
@@ -58,6 +58,10 @@ export class Fractal {
     context.lineTo(this.size, 0);
     context.stroke();
 
+    context.beginPath();
+    context.arc(this.size, 0, Math.random() * 40, 0, Math.PI * 2);
+    context.stroke();
+
     for (let i = 0; i < this.branches; i++) {
       context.save();
 
@@ -69,10 +73,10 @@ export class Fractal {
       this.#drawLine(context, depth + 1);
       context.restore();
 
-      context.save();
-      context.rotate(-this.spread);
-      this.#drawLine(context, depth + 1);
-      context.restore();
+      // context.save();
+      // context.rotate(-this.spread);
+      // this.#drawLine(context, depth + 1);
+      // context.restore();
 
       context.restore();
     }
