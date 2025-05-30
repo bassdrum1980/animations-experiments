@@ -13,32 +13,20 @@
  * This approach separates fractal calculation from animation, improving performance
  * and scalability for complex fractal visualizations.
  */
-
-import { getComplementaryHSL } from "../utils/color.js";
 export class Fractal {
-  constructor(canvasWidth, canvasHeight) {
+  constructor(canvasWidth, canvasHeight, color) {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
-    this.size = this.canvasWidth / 8;
-    this.sides = 20;
-    this.maxDepth = 3;
+    this.color = color || "hsl(0, 0%, 100%)";
+    this.size = this.canvasWidth / 4;
+    this.sides = 16;
+    this.maxDepth = 2;
     this.scale = 0.6;
     this.spread = Math.random() * Math.PI * 0.5 + Math.PI * 0.25;
     this.branches = 3;
-    this.hue = Math.random() * 360;
-    this.saturation = 100;
-    this.lightness = 50;
-    this.color = `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
-    this.complimentaryColor = getComplementaryHSL(
-      this.hue,
-      this.saturation - 60,
-      this.lightness + 45
-    );
   }
 
   draw(context) {
-    this.#updateBackground(context);
-
     context.lineWidth = 6;
     context.lineCap = "round";
     context.shadowColor = "rgba(0, 0, 0, .25)";
@@ -88,10 +76,5 @@ export class Fractal {
 
       context.restore();
     }
-  }
-
-  #updateBackground(context) {
-    context.fillStyle = this.complimentaryColor;
-    context.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
   }
 }
