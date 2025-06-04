@@ -115,6 +115,8 @@ export class Fractal {
     context.stroke();
   }
   #drawBezierCurve(context, x1, y1, x2, y2, x3, y3) {
+    // bezierCurveTo GUI generator
+    // https://www.victoriakirst.com/beziertool/
     context.beginPath();
     context.moveTo(109 + this.bezierXoffset, 124 + this.bezierYoffset);
     context.bezierCurveTo(x1, y1, x2, y2, x3, y3);
